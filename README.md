@@ -1,134 +1,158 @@
-# 8x Hiring Template
+# Cosmic Oracle
 
-A modern SaaS starter template for frontend engineering assessments. Built with Next.js 16, React 19, TypeScript, Tailwind CSS, and Supabase.
+Cosmic Oracle is a dark-themed astrology web app built with Next.js, React, TypeScript, and Supabase. It combines classic zodiac features with an AI chat experience so users can explore horoscopes, generate birth charts, compare compatibility, and ask follow-up questions in a single flow.
 
-## Quick Start
+## What It Does
 
-### Prerequisites
+- Daily, weekly, and monthly horoscope reading
+- Birth chart generation from date and time of birth
+- Compatibility reports for two people
+- AI astrologer chat powered through OpenRouter
+- Auth flows, profile pages, and upgrade screens
+- Premium cosmic UI with responsive layouts and reusable components
 
-- [Node.js](https://nodejs.org/) (v20+)
-- [pnpm](https://pnpm.io/) (or npm/yarn)
-- [Docker](https://www.docker.com/) (for local Supabase)
-- [Supabase CLI](https://supabase.com/docs/guides/cli)
+## Product Walkthrough
 
-### Setup
+### Home
+The landing experience introduces the core tools and lets users jump straight into horoscopes, chart generation, compatibility, or chat.
 
-1. **Clone the repository**
-   ```bash
-   git clone <repo-url>
-   cd 8x-hiring-template
-   ```
+### Horoscopes
+Users can browse all zodiac signs and switch between daily, weekly, and monthly forecasts. The app supports a configurable external horoscope API and falls back to local data when no provider is configured.
 
-2. **Install dependencies**
-   ```bash
-   pnpm install
-   ```
+### Birth Chart
+The birth chart flow collects birth date, optional birth time, and city, then generates an approximate chart with planetary placements, houses, and sign distributions.
 
-3. **Start local Supabase**
-   ```bash
-   # If you have another Supabase project running, stop it first:
-   # supabase stop --project-id <other-project>
+### Compatibility
+The compatibility page compares two generated charts and returns scores, strengths, challenges, and a summary of the relationship dynamic.
 
-   supabase start
-   ```
-
-   This will output your local credentials (note: this project uses custom ports):
-   ```
-   API URL: http://127.0.0.1:54521
-   Publishable key: sb_publishable_...
-   Secret key: sb_secret_...
-   ```
-
-   Migrations are applied automatically during startup.
-
-4. **Configure environment**
-   ```bash
-   cp .env.example .env.local
-   ```
-
-   Then edit `.env.local` with the keys from step 3:
-   ```
-   NEXT_PUBLIC_SUPABASE_URL="http://127.0.0.1:54521"
-   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="<your-publishable-key>"
-   SUPABASE_SERVICE_ROLE_KEY="<your-secret-key>"
-   ```
-
-   Optional:
-   ```
-   HOROSCOPE_API_URL="https://example.com/horoscope"
-   ```
-   If this is not set, the horoscope route uses its built-in local fallback data.
-
-5. **Start development server**
-   ```bash
-   pnpm dev
-   ```
-
-6. **Open** [http://localhost:3000](http://localhost:3000)
+### AI Astrologer
+The chat page uses the AI SDK with OpenRouter to stream responses from a themed “Cosmic Oracle” assistant.
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 (App Router)
-- **Language**: TypeScript
-- **UI**: React 19 + Tailwind CSS + Shadcn/ui
-- **Database**: Supabase (PostgreSQL)
-- **Auth**: Supabase Auth (email/password)
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Supabase
+- AI SDK
+- OpenRouter
+- Lucide icons
 
-## Features
+## Local Setup
 
-- User authentication (sign up, sign in, sign out)
-- Protected routes
-- Subscription tiers (Free / Pro)
-- Profile management
-- Account deletion
-- Responsive design
-- Dark mode support
+### Prerequisites
+
+- Node.js 20+
+- npm or pnpm
+- Docker
+- Supabase CLI
+
+### 1. Clone the repo
+
+```bash
+git clone <repo-url>
+cd cosmic
+```
+
+### 2. Install dependencies
+
+Using npm:
+
+```bash
+npm install
+```
+
+Using pnpm:
+
+```bash
+pnpm install
+```
+
+### 3. Start local Supabase
+
+```bash
+supabase start
+```
+
+This applies the local migrations and prints the values you need for `.env.local`.
+
+### 4. Configure environment variables
+
+Create a local env file:
+
+```bash
+cp .env.example .env.local
+```
+
+Then set:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL="http://127.0.0.1:54521"
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="your-local-publishable-key"
+SUPABASE_SERVICE_ROLE_KEY="your-local-service-role-key"
+OPENROUTER_API_KEY="your-openrouter-api-key"
+```
+
+Optional:
+
+```env
+HOROSCOPE_API_URL="https://example.com/horoscope"
+```
+
+If `HOROSCOPE_API_URL` is not set, the app serves built-in horoscope fallback data.
+
+### 5. Run the app
+
+Using npm:
+
+```bash
+npm run dev
+```
+
+Using pnpm:
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Available Scripts
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
 
 ## Project Structure
 
-```
-├── app/                    # Next.js App Router pages
-│   ├── api/               # API routes
-│   ├── auth/              # Auth pages (login, signup)
-│   ├── profile/           # User profile
-│   └── upgrade/           # Subscription upgrade flow
-├── components/            # Reusable UI components
-├── contexts/              # React Context providers
-├── lib/                   # Utilities and Supabase clients
-└── supabase/              # Database migrations
+```text
+app/                 Next.js routes, pages, and API handlers
+components/          Reusable UI and feature components
+contexts/            React context providers
+hooks/               Shared React hooks
+lib/                 Astrology logic, utilities, and Supabase clients
+public/              Static assets
+supabase/            Local config and migrations
 ```
 
-## Useful Commands
+## Current Notes
 
-```bash
-pnpm dev          # Start development server
-pnpm build        # Build for production
-pnpm lint         # Run ESLint
-supabase start    # Start local Supabase (applies migrations)
-supabase stop     # Stop local Supabase
-supabase studio   # Open Supabase Studio (local admin UI)
-```
+- Horoscope API calls are resilient by design and fall back to local data when no external provider is configured.
+- Birth chart and compatibility calculations are approximate, demo-oriented calculations rather than ephemeris-grade astrology.
+- The AI chat route expects an OpenRouter key for real responses.
+- There are still some unrelated repo-level build and dependency issues to clean up outside the core README work.
 
-## Database Schema
+## Future Improvements
 
-The template uses a simple `subscriptions` table:
+- Persist generated charts and chat history per user
+- Improve chart accuracy with a dedicated astrology calculation library
+- Add richer compatibility visualizations
+- Tighten production build stability and dependency cleanup
 
-```sql
-CREATE TABLE subscriptions (
-  id UUID PRIMARY KEY,
-  user_id UUID REFERENCES auth.users(id),
-  tier TEXT CHECK (tier IN ('free', 'pro')),
-  created_at TIMESTAMP,
-  updated_at TIMESTAMP
-);
-```
+## License
 
-## Notes
-
-- **No real payments**: The upgrade flow is simulated (writes directly to database)
-- **Local auth**: Email verification is disabled in development mode
-- **Test accounts**: Use any email/password to sign up locally
-
----
-
-See [CANDIDATE_ASSIGNMENT.md](./CANDIDATE_ASSIGNMENT.md) for assessment instructions.
+No license has been added yet.
